@@ -9,7 +9,7 @@ interface SecurityGateProps {
 
 const PASSCODE_KEY = 'unidonuts_auth_token';
 // 簡易パスコード。実運用では環境変数などで管理するのが望ましいが、今回はクライアントサイド完結のためここで定義
-const CORRECT_PASSCODE = '0000';
+const CORRECT_PASSCODE = 'okazaemon';
 
 export const SecurityGate: React.FC<SecurityGateProps> = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
