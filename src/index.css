@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface text-gray-800 font-sans antialiased;
+  }
+}
+
+.my-subtitle-margin {
+  margin-left: 30px;
+}
+
+.my-csv-margin {
+  margin-right: 20px;
+}
