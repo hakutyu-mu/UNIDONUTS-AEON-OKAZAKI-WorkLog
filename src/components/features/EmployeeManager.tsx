@@ -116,13 +116,15 @@ export const EmployeeManager: React.FC<EmployeeManagerProps> = ({ onUpdate }) =>
             <div className="grid gap-2">
                 {employees.map((emp) => (
                     <div key={emp.id} className="flex justify-between items-center p-3 bg-white rounded-md shadow-sm border border-secondary-dark/10">
-                        <div>
-                            <span className="font-medium text-gray-900">{emp.name}</span>
-                            {emp.tags.includes('管理者') && (
-                                <span className="ml-2 px-2 py-0.5 text-xs bg-secondary-light text-primary-dark rounded-full">管理者</span>
-                            )}
+                        <div className="min-w-0 flex-1 mr-2">
+                            <div className="font-medium text-gray-900 truncate">
+                                {emp.name}
+                                {emp.tags.includes('管理者') && (
+                                    <span className="ml-2 px-2 py-0.5 text-xs bg-secondary-light text-primary-dark rounded-full align-middle">管理者</span>
+                                )}
+                            </div>
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 flex-shrink-0">
                             <button
                                 onClick={() => startEdit(emp)}
                                 className="p-1 text-gray-500 hover:text-primary transition-colors"
