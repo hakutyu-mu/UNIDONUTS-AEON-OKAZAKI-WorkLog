@@ -92,7 +92,7 @@ export const ShiftInput: React.FC<ShiftInputProps> = ({ employees, currentDate, 
             isManager,
             hourlyRateParams: {
                 base: 1200,
-                managerBonus: 150,
+                managerBonus: 100,
                 overtimeMultiplier: 1.25,
             }
         };
