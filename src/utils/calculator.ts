@@ -21,14 +21,19 @@ export const calculateTime = (startTime: string, endTime: string, breakMinutes: 
 };
 
 // 休憩ルールのバリデーション
-export const validateBreak = (workMinutes: number, breakMinutes: number): boolean => {
-    const workHours = workMinutes / 60;
-
-    if (workHours >= 8) {
+// 拘束時間に応じた必要休憩時間:
+// 8時間以上 -> 60分
+// 6時間超過 -> 45分
+// 6時間ちょうど -> 30分
+export const validateBreak = (durationMinutes: number, breakMinutes: number): boolean => {
+    if (durationMinutes >= 480) { // 8時間以上
         return breakMinutes >= 60;
     }
-    if (workHours >= 6) {
+    if (durationMinutes > 360) { // 6時間超過
         return breakMinutes >= 45;
+    }
+    if (durationMinutes === 360) { // 6時間ちょうど
+        return breakMinutes >= 30;
     }
     return true;
 };
@@ -55,6 +60,6 @@ export const calculateSalary = (shift: Shift, employeeName: string = ''): ShiftS
         basePay,
         overtimePay,
         totalPay,
-        isValidBreak: validateBreak(workMinutes, shift.breakMinutes),
+        isValidBreak: validateBreak(durationMinutes, shift.breakMinutes),
     };
 };

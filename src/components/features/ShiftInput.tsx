@@ -34,13 +34,17 @@ export const ShiftInput: React.FC<ShiftInputProps> = ({ employees, currentDate, 
             const { durationMinutes } = calculateTime(startTime, endTime, 0); // Calculate raw duration
             let newBreak = '0';
 
-            // 8時間 (480分) 超過 -> 60分
-            if (durationMinutes > 480) {
+            // 8時間以上 -> 60分
+            if (durationMinutes >= 480) {
                 newBreak = '60';
             }
-            // 6時間 (360分) 超過 -> 45分
+            // 6時間超過 -> 45分
             else if (durationMinutes > 360) {
                 newBreak = '45';
+            }
+            // 6時間ちょうど -> 30分
+            else if (durationMinutes === 360) {
+                newBreak = '30';
             }
 
             setBreakMinutes(newBreak);
@@ -51,16 +55,16 @@ export const ShiftInput: React.FC<ShiftInputProps> = ({ employees, currentDate, 
         // Validation & Preview
         setWarning('');
         if (startTime && endTime) {
-            // Re-calc for validation warning with current breakMinutes
             const currentBreak = Number(breakMinutes);
-
-            const { workMinutes } = calculateTime(startTime, endTime, currentBreak);
-            const isValid = validateBreak(workMinutes, currentBreak);
+            const { durationMinutes } = calculateTime(startTime, endTime, 0);
+            const isValid = validateBreak(durationMinutes, currentBreak);
             if (!isValid) {
-                if (workMinutes / 60 >= 8) {
-                    setWarning('実労働時間が8時間を超える場合は、60分以上の休憩が必要です。');
-                } else if (workMinutes / 60 >= 6) {
-                    setWarning('実労働時間が6時間を超える場合は、45分以上の休憩が必要です。');
+                if (durationMinutes >= 480) {
+                    setWarning('拘束時間が8時間以上の場合は、60分以上の休憩が必要です。');
+                } else if (durationMinutes > 360) {
+                    setWarning('拘束時間が6時間を超える場合は、45分以上の休憩が必要です。');
+                } else if (durationMinutes === 360) {
+                    setWarning('拘束時間が6時間ちょうどの場合は、30分以上の休憩が必要です。');
                 }
             }
         }
